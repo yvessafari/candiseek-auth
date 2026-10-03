@@ -295,6 +295,19 @@
          color:var(--ink);cursor:pointer;text-transform:none;letter-spacing:0}
   .check input{width:18px;height:18px;accent-color:var(--brand);margin:0;flex:none}
   input:disabled{opacity:.5;cursor:not-allowed}
+  .pref{margin-bottom:20px}
+  .pref:last-child{margin-bottom:0}
+  .pref-l{display:block;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+          color:var(--faint);margin:0 0 9px}
+  .pref-n{margin:9px 0 0;font-size:12.5px;line-height:1.55;color:var(--muted)}
+  .seg2{display:flex;gap:8px;flex-wrap:wrap}
+  .seg2 button,.rchip{appearance:none;font:inherit;font-weight:600;font-size:14px;cursor:pointer;
+        background:var(--surface);color:var(--muted);border:1px solid var(--line);
+        border-radius:999px;padding:9px 16px;transition:all 150ms}
+  .seg2 button[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+  .rchip[aria-pressed="true"]{background:var(--brand-soft);border-color:var(--brand);color:var(--brand-deep)}
+  .seg2 button:disabled{opacity:.45;cursor:not-allowed}
+  .reach{display:flex;gap:8px;flex-wrap:wrap}
 
   .sys{background:none;border:0;padding:0;margin:0 0 18px}
   .sys summary{font-size:13px;color:var(--faint);font-weight:500}
@@ -679,6 +692,23 @@
         <div class="msg" id="skillMsg"></div>
       </section>
 
+      <section class="sec" id="prefsBox">
+        <h3>Your preferences</h3>
+
+        <div class="pref">
+          <span class="pref-l">How open are you?</span>
+          <div class="seg2" id="openSeg"></div>
+          <p class="pref-n" id="openNote"></p>
+        </div>
+
+        <div class="pref">
+          <span class="pref-l">How should we reach you?</span>
+          <div class="reach" id="reachChips"></div>
+          <p class="pref-n">Email works today, and we'll keep using it. Text, calls and in-app alerts are on the way — pick the ones you'd like and we'll switch them on for you as each one arrives.</p>
+          <div class="msg" id="prefMsg"></div>
+        </div>
+      </section>
+
       <div class="pause" id="pauseBox">
         <div class="pause-row">
           <div>
@@ -891,6 +921,8 @@ function renderPause(on){
   $("pauseText").textContent = on
     ? "Roles are being scored against you, and we'll email when one clears your line."
     : "Nothing will reach you and employers can't see your profile. Your scores keep updating in the background.";
+  MATCHING_ON = on;
+  renderPrefs();
 }
 
 $("pauseToggle").onclick = async () => {
@@ -898,11 +930,12 @@ $("pauseToggle").onclick = async () => {
   const next = !on;
   renderPause(next);                       // optimistic — feels instant
   $("pauseToggle").disabled = true;
+  if(!next) rememberActive(ACTIVE_STATUS); // pausing: remember what to restore
   try{
     await writeProfile(SESSION.access_token, {
       user_id: SESSION.user.id,
       visible: next,
-      open_status: next ? "open" : "closed",
+      open_status: next ? ACTIVE_STATUS : "closed",   // resume as 'looking' OR 'open' — whichever they had
     });
   }catch(err){
     renderPause(on);                       // put it back if the write failed
@@ -912,6 +945,7 @@ $("pauseToggle").onclick = async () => {
 };
 
 function showAllSet(profile, row, notif){
+  applyPrefs(profile);
   renderPause(profile.visible !== false && profile.open_status !== "closed");
   const bits = [];
   if(profile.headline) bits.push(profile.headline);
@@ -1259,8 +1293,93 @@ function resetDashboard(){
   POOL = []; MYSKILLS = new Map(); MATCHES = []; PREV_HEADLINE = "";
   $("skillChips").innerHTML = ""; $("skillQuick").innerHTML = ""; $("matchesList").innerHTML = "";
   $("matchesMeta").textContent = ""; $("skillInput").value = ""; skillMsg("");
+  MATCHING_ON = true; ACTIVE_STATUS = "open"; REACH_SEL = new Set(["Email"]);
+  $("openSeg").innerHTML = ""; $("reachChips").innerHTML = ""; prefMsg("");
   $("pRemote").checked = false; syncRemote();
 }
+
+/* ---- preferences: how open, how to reach ---- */
+const REACH = ["Email","Text","Call","In-app"];
+let MATCHING_ON = true;
+let ACTIVE_STATUS = "open";                  // what "matching on" means for this person: 'looking' or 'open'
+let REACH_SEL = new Set(["Email"]);
+
+function prefMsg(text){
+  const m = $("prefMsg");
+  if(!text){ m.className = "msg"; m.textContent = ""; return; }
+  m.textContent = text;
+  m.className = "msg show bad";
+}
+function rememberActive(v){
+  try{ localStorage.setItem("cs_active_" + SESSION.user.id, v); }catch(e){}
+}
+function applyPrefs(profile){
+  let active = (profile.open_status === "looking" || profile.open_status === "open") ? profile.open_status : null;
+  if(!active){                                // paused: the database says 'closed', so use what we remembered
+    try{ active = localStorage.getItem("cs_active_" + SESSION.user.id); }catch(e){}
+  }
+  ACTIVE_STATUS = active === "looking" ? "looking" : "open";
+  const saved = (profile.contact_prefs || []).filter(x => REACH.indexOf(x) !== -1);
+  REACH_SEL = new Set(saved.length ? saved : ["Email"]);   // nothing stored = email, which is what we really do
+}
+function renderPrefs(){
+  const on = MATCHING_ON;
+  $("openSeg").innerHTML = [["looking","Actively looking"], ["open","Open to the right role"]].map(o =>
+    '<button type="button" data-open="' + o[0] + '" aria-pressed="' + (ACTIVE_STATUS === o[0]) + '"' + (on ? '' : ' disabled') + '>' + o[1] + '</button>'
+  ).join("");
+  $("openNote").textContent = on
+    ? "When employers search, people who are actively looking come first."
+    : "Matching is paused — resume it below to change this.";
+  $("reachChips").innerHTML = REACH.map(r =>
+    '<button type="button" class="rchip" data-reach="' + r + '" aria-pressed="' + REACH_SEL.has(r) + '">' + r + '</button>'
+  ).join("");
+}
+
+$("openSeg").onclick = async (e) => {
+  const b = e.target.closest("button[data-open]");
+  if(!b || !MATCHING_ON) return;
+  const v = b.getAttribute("data-open");
+  if(v === ACTIVE_STATUS) return;
+  const prev = ACTIVE_STATUS;
+  ACTIVE_STATUS = v;
+  renderPrefs();
+  prefMsg("");
+  try{
+    await writeProfile(SESSION.access_token, { user_id: SESSION.user.id, open_status: v });
+    rememberActive(v);
+  }catch(err){
+    ACTIVE_STATUS = prev;
+    renderPrefs();
+    prefMsg(err.message);
+  }
+};
+
+$("reachChips").onclick = async (e) => {
+  const b = e.target.closest("button[data-reach]");
+  if(!b) return;
+  const r = b.getAttribute("data-reach");
+  const next = new Set(REACH_SEL);
+  if(next.has(r)){
+    if(next.size === 1) return prefMsg("Keep at least one — we need some way to reach you.");
+    next.delete(r);
+  }else{
+    next.add(r);
+  }
+  const prev = REACH_SEL;
+  REACH_SEL = next;
+  renderPrefs();
+  prefMsg("");
+  try{
+    await writeProfile(SESSION.access_token, {
+      user_id: SESSION.user.id,
+      contact_prefs: REACH.filter(x => next.has(x)),
+    });
+  }catch(err){
+    REACH_SEL = prev;
+    renderPrefs();
+    prefMsg(err.message);
+  }
+};
 
 /* ---- wiring (event delegation, so re-rendering never loses handlers) ---- */
 $("skillChips").onclick = (e) => {
