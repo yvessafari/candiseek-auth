@@ -243,6 +243,59 @@
   .switch[aria-checked="false"] span{transform:translateX(0)}
   .pause.off{background:#FAFAFD;border-color:#DEDDEC}
 
+  /* ---------- matches + skills ---------- */
+  .sec{margin:0 0 26px;padding-top:22px;border-top:1px solid var(--line)}
+  .sec h3{font-family:"Space Grotesk",sans-serif;font-size:18px;font-weight:700;letter-spacing:-.01em;
+          margin:0 0 4px;color:var(--brand-deep)}
+  .sec-sub{margin:0 0 14px;font-size:13px;line-height:1.55;color:var(--muted)}
+  .sec-foot{margin:14px 0 0;font-size:12.5px;line-height:1.55;color:var(--faint)}
+  .empty{display:block;margin:0;font-size:13.5px;line-height:1.6;color:var(--muted)}
+  .match{padding:14px 0;border-bottom:1px solid var(--line)}
+  .match:last-of-type{border-bottom:0}
+  .m-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+  .m-title{font-weight:600;font-size:15px;color:var(--ink)}
+  .m-meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .m-score{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:26px;letter-spacing:-.03em;
+           color:var(--faint);line-height:1;flex:none}
+  .m-score small{font-size:13px;margin-left:1px}
+  .match.clears .m-score{color:var(--good-deep)}
+  .m-flag{display:inline-block;margin-top:7px;font-size:10.5px;font-weight:700;letter-spacing:.07em;
+          text-transform:uppercase;color:var(--good-deep);background:var(--good-soft);padding:3px 9px;border-radius:999px}
+  .bars{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+  .bar-l{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+  .bar{height:5px;border-radius:99px;background:#EDEDF6;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:99px;background:var(--signal)}
+  .match.clears .bar i{background:var(--good)}
+  .asks{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .asks-l{font-size:12px;color:var(--muted);margin-right:2px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .chip{display:inline-flex;align-items:center;gap:4px;background:var(--brand-soft);color:var(--brand-deep);
+        border-radius:999px;padding:4px 5px 4px 12px;font-size:13.5px;font-weight:600}
+  .chip.old{background:#F3F2F9;color:var(--muted)}
+  .chip-age{appearance:none;border:0;background:rgba(94,84,214,.13);color:var(--brand);font:inherit;
+            font-size:11px;font-weight:700;border-radius:999px;padding:3px 8px;cursor:pointer}
+  .chip.old .chip-age{background:#E4E2F1;color:var(--muted)}
+  .chip-x{appearance:none;border:0;background:none;color:var(--muted);font-size:18px;line-height:1;
+          padding:0 7px 2px;cursor:pointer}
+  .chip-x:hover{color:var(--bad)}
+  .quickwrap{margin-bottom:14px}
+  .quick-l{display:block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+           color:var(--faint);margin-bottom:8px}
+  .quick{display:flex;flex-wrap:wrap;gap:6px}
+  .qchip{appearance:none;background:var(--surface);border:1px dashed #C9C5EA;color:var(--brand);font:inherit;
+         font-size:13px;font-weight:600;padding:5px 12px;border-radius:999px;cursor:pointer}
+  .qchip:hover{background:var(--brand-soft)}
+  .addrow{display:flex;gap:8px}
+  .addrow input{flex:1;min-width:0}
+  .addbtn{appearance:none;border:0;background:var(--brand);color:#fff;font:inherit;font-weight:700;
+          font-size:14px;padding:0 20px;border-radius:10px;cursor:pointer}
+  .addbtn:hover{background:#5146c9}
+  .msg.ok{background:var(--good-soft);color:var(--good-deep)}
+  .check{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:14px;font-weight:500;
+         color:var(--ink);cursor:pointer;text-transform:none;letter-spacing:0}
+  .check input{width:18px;height:18px;accent-color:var(--brand);margin:0;flex:none}
+  input:disabled{opacity:.5;cursor:not-allowed}
+
   .sys{background:none;border:0;padding:0;margin:0 0 18px}
   .sys summary{font-size:13px;color:var(--faint);font-weight:500}
   .sys summary::after{font-size:16px}
@@ -374,7 +427,7 @@
     <div class="band">
       <div class="band-item">
         <h4>Five questions to start.</h4>
-        <p>Answer five things and we start scoring. One profile, measured against every role — nothing else is required, now or later.</p>
+        <p>Answer five things and we start scoring. Skills and the rest are optional — each one you add sharpens your matches.</p>
       </div>
       <div class="band-item">
         <h4>The pay you see is the pay we scored.</h4>
@@ -521,7 +574,7 @@
     <!-- onboarding -->
     <div id="onboard" class="card onboard hide">
       <h2 class="ob-h">Five questions. Then we take it from here.</h2>
-      <p class="ob-sub">This is all we need to start scoring roles against you. You can fill in the rest whenever — every detail you add moves your scores.</p>
+      <p class="ob-sub">This is all we need to start scoring roles against you. Skills come next, and they're optional — each one you add sharpens your matches.</p>
 
       <div class="field">
         <label for="pName">Your name</label>
@@ -561,7 +614,6 @@
         <label for="pLoc">Where you want to work</label>
         <input id="pLoc" type="text" list="places" placeholder="Start typing, or pick one" autocomplete="off" />
         <datalist id="places">
-          <option>Remote</option>
           <option>Atlanta, GA</option><option>Austin, TX</option><option>Baltimore, MD</option>
           <option>Birmingham, AL</option><option>Boston, MA</option><option>Charleston, SC</option>
           <option>Charlotte, NC</option><option>Chicago, IL</option><option>Cincinnati, OH</option>
@@ -580,6 +632,7 @@
           <option>Savannah, GA</option><option>Seattle, WA</option><option>St. Louis, MO</option>
           <option>Tampa, FL</option><option>Tucson, AZ</option><option>Washington, DC</option>
         </datalist>
+        <label class="check" for="pRemote"><input type="checkbox" id="pRemote" /><span>Remote roles only</span></label>
       </div>
 
       <div class="field">
@@ -603,10 +656,28 @@
       </div>
       <p class="setline" id="setLine">—</p>
 
-      <div class="next">
-        <h4>What happens now</h4>
-        <p>Nothing, from you. Every role that comes in gets scored against this automatically, and we'll email you when one crosses your line. Add skills and certifications whenever you like — you'll watch the scores move.</p>
-      </div>
+      <section class="sec" id="matchesBox">
+        <h3>Your matches</h3>
+        <p class="sec-sub" id="matchesMeta"></p>
+        <div id="matchesList"></div>
+        <p class="sec-foot hide" id="matchesFoot">Below your line? A score is a signal, not a verdict — people get hired for what they can learn.</p>
+      </section>
+
+      <section class="sec" id="skillsBox">
+        <h3>Your skills</h3>
+        <p class="sec-sub">Skills move your score the most. Tap <b>recent</b> on anything you haven't used in 3+ years — it counts for less, not nothing.</p>
+        <div class="chips" id="skillChips"></div>
+        <div class="quickwrap" id="skillQuickWrap">
+          <span class="quick-l">Common ones</span>
+          <div class="quick" id="skillQuick"></div>
+        </div>
+        <div class="addrow">
+          <input id="skillInput" type="text" list="skillpool" placeholder="Add a skill or certification" autocomplete="off" />
+          <button class="addbtn" id="skillAdd" type="button">Add</button>
+        </div>
+        <datalist id="skillpool"></datalist>
+        <div class="msg" id="skillMsg"></div>
+      </section>
 
       <div class="pause" id="pauseBox">
         <div class="pause-row">
@@ -723,6 +794,7 @@ $("go").onclick = async () => {
 
 $("signout").onclick = () => {
   dropSession();
+  resetDashboard();
   $("home").classList.add("hide");
   $("faq").classList.remove("hide");
   document.querySelector(".site-foot").classList.remove("hide");
@@ -785,14 +857,28 @@ async function writeProfile(token, body){
 const EXP_LABEL = { Junior:"under a year", Mid:"1–3 years", Senior:"3–7 years",
                     Lead:"7–12 years", Staff:"12+ years" };
 
+function syncRemote(){
+  const on = $("pRemote").checked;
+  $("pLoc").disabled = on;
+  $("pLoc").placeholder = on ? "Not needed for remote roles" : "Start typing, or pick one";
+}
+$("pRemote").onchange = syncRemote;
+
 function showOnboard(profile){
+  PREV_HEADLINE = (profile && profile.headline) || "";
   if(profile){
+    const legacyRemote = /^remote$/i.test((profile.location || "").trim());   // early saves stored "Remote" as a place
+    const remote = !!profile.remote_only || legacyRemote;
     $("pName").value = profile.name || "";
     $("pUnit").value = profile.headline || "";
     if(profile.seniority) $("pExp").value = profile.seniority;
-    $("pLoc").value  = profile.location || "";
+    $("pRemote").checked = remote;
+    $("pLoc").value  = legacyRemote ? "" : (profile.location || "");
     $("pPay").value  = profile.pay_min != null ? profile.pay_min : "";
+  }else{
+    $("pRemote").checked = false;
   }
+  syncRemote();
   $("allset").classList.add("hide");
   $("onboard").classList.remove("hide");
 }
@@ -830,7 +916,7 @@ function showAllSet(profile, row, notif){
   const bits = [];
   if(profile.headline) bits.push(profile.headline);
   if(profile.seniority && EXP_LABEL[profile.seniority]) bits.push(EXP_LABEL[profile.seniority]);
-  if(profile.location) bits.push(profile.location);
+  if(profile.remote_only) bits.push("Remote only"); else if(profile.location) bits.push(profile.location);
   if(profile.pay_min != null) bits.push("$" + Number(profile.pay_min).toLocaleString() + "/wk floor");
   $("setLine").textContent = bits.join(" · ") || "Profile saved.";
 
@@ -853,42 +939,394 @@ function showAllSet(profile, row, notif){
 
   $("onboard").classList.add("hide");
   $("allset").classList.remove("hide");
+  refreshDashboard(notif);
 }
 
-$("pSave").onclick = async () => {
-  const name = $("pName").value.trim();
-  const unit = $("pUnit").value.trim();
-  const loc  = $("pLoc").value.trim();
-  const pay  = $("pPay").value.trim();
-  const m = $("pMsg");
+/* ============================================================
+   Skills + matches
+   ============================================================ */
+let POOL = [];                 // every skill we know: [{id,name,synonyms}]
+let MYSKILLS = new Map();      // skill_id -> {id,name,last_used}
+let MATCHES = [];              // latest score per job, best first
+let THRESH = 75;               // the candidate's own line
+let DASH_RUN = 0;              // bumps on sign-out so late responses are ignored
+let PREV_HEADLINE = "";
 
-  if(!name || !unit || !loc){
-    m.textContent = "Name, specialty and location are needed to score anything.";
-    m.className = "msg show bad";
+const DATED_YEARS = 3;         // must match DATED_YEARS in matching.js
+const NURSE_QUICK = ["RN","BSN","BLS","ACLS","PALS","NRP","ICU","Med-Surg","Telemetry",
+                     "IV Therapy","Triage","Wound Care","Epic","Cerner","Phlebotomy"];
+// Stopgap: the shared skill pool was seeded with non-clinical demo skills.
+// Hide them from suggestions here until skills get a "domain" column.
+const NOT_FOR_NURSES = new Set(["react","typescript","javascript","node","graphql","aws","postgres",
+  "kubernetes","python","sql","excel","quickbooks","salesforce","sales","marketing","seo",
+  "teacher","electrician","cdl driver","recruiter"]);
+
+/* ---- pure helpers (no network, no DOM) ---- */
+function esc(v){
+  return String(v == null ? "" : v)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+function isoDay(d){ return d.toISOString().slice(0,10); }
+function todayISO(){ return isoDay(new Date()); }
+function yearsAgoISO(n){ const d = new Date(); d.setFullYear(d.getFullYear() - n); return isoDay(d); }
+function isDated(iso){
+  if(!iso) return false;
+  const d = new Date(iso);
+  if(isNaN(d.getTime())) return false;
+  return (Date.now() - d.getTime()) / (365.25 * 24 * 3600 * 1000) >= DATED_YEARS;
+}
+function cleanSkillName(raw){
+  const n = String(raw == null ? "" : raw).replace(/\s+/g, " ").trim();
+  if(!n) return { error:"Type a skill first." };
+  if(n.length > 40) return { error:"Keep it under 40 characters." };
+  if(!/^[\p{L}\p{N} .,+#\/&'()\-]+$/u.test(n)) return { error:"Letters, numbers and basic punctuation only." };
+  return { name:n };
+}
+function findPoolSkill(name){
+  const q = String(name == null ? "" : name).trim().toLowerCase();
+  if(!q) return null;
+  for(const sk of POOL){
+    if(sk.name.toLowerCase() === q) return sk;
+    if((sk.synonyms || []).some(x => String(x).toLowerCase() === q)) return sk;
+  }
+  return null;
+}
+function latestPerJob(rows){
+  const m = new Map();
+  (rows || []).forEach(r => {
+    const cur = m.get(r.job_id);
+    if(!cur || new Date(r.computed_at) > new Date(cur.computed_at)) m.set(r.job_id, r);
+  });
+  return m;
+}
+function pct(v){
+  const n = Number(v);
+  if(!isFinite(n)) return 0;
+  return Math.round(Math.max(0, Math.min(1, n)) * 100);
+}
+function fmtPay(j){
+  const money = (v) => "$" + Number(v).toLocaleString("en-US");
+  const unit = j.pay_type === "weekly" ? "/wk" : j.pay_type === "hourly" ? "/hr" : "/yr";
+  const lo = j.pay_min, hi = j.pay_max;
+  if(lo != null && hi != null && Number(lo) !== Number(hi)) return money(lo) + "–" + money(hi).slice(1) + unit;
+  const one = lo != null ? lo : hi;
+  return one != null ? money(one) + unit : "";
+}
+
+/* ---- REST helper: always uses a fresh token ---- */
+async function api(method, path, opts){
+  opts = opts || {};
+  const token = await freshToken();
+  const headers = { apikey:ANON_KEY, Authorization:"Bearer " + token };
+  if(opts.body !== undefined) headers["Content-Type"] = "application/json";
+  if(opts.prefer) headers.Prefer = opts.prefer;
+  const res = await fetch(SUPABASE_URL + "/rest/v1/" + path, {
+    method, headers,
+    body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
+  });
+  if(res.status === 204) return [];
+  const data = await res.json().catch(() => null);
+  if(!res.ok){
+    const err = new Error((data && (data.message || data.hint)) || ("Request failed (" + res.status + ")"));
+    err.status = res.status;
+    err.code = data && data.code;
+    throw err;
+  }
+  return data == null ? [] : data;
+}
+
+function skillMsg(text, tone){
+  const m = $("skillMsg");
+  if(!text){ m.className = "msg"; m.textContent = ""; return; }
+  m.textContent = text;
+  m.className = "msg show " + (tone === "ok" ? "ok" : "bad");
+}
+
+/* ---- loading ---- */
+async function loadPool(){
+  const run = DASH_RUN;
+  const rows = await api("GET", "skills?select=id,name,synonyms&order=name.asc&limit=1000");
+  if(run === DASH_RUN) POOL = rows;
+}
+async function loadMySkills(uid){
+  const run = DASH_RUN;
+  const rows = await api("GET", "candidate_skills?select=skill_id,last_used,skills(name)&candidate_id=eq." + uid);
+  if(run !== DASH_RUN) return;               // signed out (or a newer load started) while we waited
+  const next = new Map();
+  rows.forEach(r => {
+    if(r.skills && r.skills.name) next.set(r.skill_id, { id:r.skill_id, name:r.skills.name, last_used:r.last_used });
+  });
+  MYSKILLS = next;
+}
+async function loadMatches(uid){
+  const run = DASH_RUN;
+  const rows = await api("GET",
+    "match_scores?select=job_id,total,part_skills,part_seniority,part_salary,part_location,computed_at" +
+    "&candidate_id=eq." + uid + "&order=computed_at.desc&limit=500");
+  if(run !== DASH_RUN) return;
+  const latest = latestPerJob(rows);
+  const ids = [...latest.keys()];
+  if(!ids.length){ MATCHES = []; return; }
+  const inList = "in.(" + ids.join(",") + ")";
+  const jobs = await api("GET", "jobs?select=id,title,location,remote,pay_type,pay_min,pay_max&id=" + inList);
+  const jskills = await api("GET", "job_skills?select=job_id,skills(name)&job_id=" + inList);
+  const byJob = new Map(jobs.map(j => [j.id, j]));
+  const asks = new Map();
+  jskills.forEach(r => {
+    if(!r.skills || !r.skills.name) return;
+    if(!asks.has(r.job_id)) asks.set(r.job_id, []);
+    asks.get(r.job_id).push(r.skills.name);
+  });
+  if(run !== DASH_RUN) return;
+  const next = ids.filter(id => byJob.has(id)).map(id => {
+    const r = latest.get(id);
+    return {
+      job: byJob.get(id),
+      score: r.total,
+      parts: { skills:r.part_skills, level:r.part_seniority, pay:r.part_salary, place:r.part_location },
+      asks: asks.get(id) || [],
+      at: r.computed_at,
+    };
+  }).sort((a, b) => b.score - a.score);
+  MATCHES = next;
+}
+
+/* ---- skills: change ---- */
+async function getOrCreateSkill(name){
+  const known = findPoolSkill(name);
+  if(known) return known;
+  try{
+    const made = await api("POST", "skills", { body:{ name }, prefer:"return=representation" });
+    const row = Array.isArray(made) ? made[0] : made;
+    if(row){ POOL.push(row); return row; }
+  }catch(err){
+    if(err.status !== 409 && err.code !== "23505") throw err;
+  }
+  // someone created it a moment ago — fetch theirs instead of failing
+  const again = await api("GET", "skills?select=id,name,synonyms&name=eq." + encodeURIComponent(name));
+  if(again[0]){ POOL.push(again[0]); return again[0]; }
+  throw new Error("Couldn't add that skill. Try again.");
+}
+
+async function addSkill(raw, opts){
+  opts = opts || {};
+  const c = cleanSkillName(raw);
+  if(c.error){ if(!opts.quiet) skillMsg(c.error); return false; }
+  try{
+    const skill = await getOrCreateSkill(c.name);
+    if(MYSKILLS.has(skill.id)){
+      if(!opts.quiet) skillMsg(skill.name + " is already on your list.", "ok");
+      return false;
+    }
+    const last = todayISO();
+    await api("POST", "candidate_skills", {
+      body:{ candidate_id:SESSION.user.id, skill_id:skill.id, last_used:last, source:"manual" },
+      prefer:"resolution=merge-duplicates,return=minimal",
+    });
+    MYSKILLS.set(skill.id, { id:skill.id, name:skill.name, last_used:last });
+    if(!opts.quiet){
+      skillMsg("Added " + skill.name + ". It counts at your next score refresh.", "ok");
+      renderSkills();
+      renderMatches();
+    }
+    return true;
+  }catch(err){
+    if(!opts.quiet) skillMsg(err.message);
+    return false;
+  }
+}
+
+async function removeSkill(id){
+  try{
+    await api("DELETE", "candidate_skills?candidate_id=eq." + SESSION.user.id + "&skill_id=eq." + id);
+    MYSKILLS.delete(id);
+    skillMsg("");
+    renderSkills();
+    renderMatches();
+  }catch(err){ skillMsg(err.message); }
+}
+
+async function toggleAge(id){
+  const sk = MYSKILLS.get(id);
+  if(!sk) return;
+  const next = isDated(sk.last_used) ? todayISO() : yearsAgoISO(DATED_YEARS + 1);
+  try{
+    await api("PATCH", "candidate_skills?candidate_id=eq." + SESSION.user.id + "&skill_id=eq." + id,
+              { body:{ last_used:next }, prefer:"return=minimal" });
+    sk.last_used = next;
+    skillMsg("");
+    renderSkills();
+  }catch(err){ skillMsg(err.message); }
+}
+
+// The specialty they typed becomes a skill automatically — if we already know it.
+async function autoSkillFromUnit(unit, uid){
+  try{
+    await loadPool();
+    const hit = findPoolSkill(unit);
+    if(!hit) return;
+    await loadMySkills(uid);                 // so we never reset a skill they've already tuned
+    if(!MYSKILLS.has(hit.id)) await addSkill(hit.name, { quiet:true });
+  }catch(e){ /* best effort — never block saving a profile */ }
+}
+
+/* ---- render ---- */
+function renderSkills(){
+  const mine = [...MYSKILLS.values()].sort((a, b) => a.name.localeCompare(b.name));
+  $("skillChips").innerHTML = mine.length
+    ? mine.map(sk => {
+        const old = isDated(sk.last_used);
+        return '<span class="chip' + (old ? ' old' : '') + '">' +
+          '<span class="chip-n">' + esc(sk.name) + '</span>' +
+          '<button type="button" class="chip-age" data-act="age" data-id="' + sk.id + '" title="Tap to change how recently you used this">' + (old ? '3+ yrs' : 'recent') + '</button>' +
+          '<button type="button" class="chip-x" data-act="rm" data-id="' + sk.id + '" aria-label="Remove ' + esc(sk.name) + '">×</button>' +
+          '</span>';
+      }).join("")
+    : '<span class="empty">None yet — add a few below. It takes under a minute.</span>';
+
+  const have = new Set(mine.map(sk => sk.name.toLowerCase()));
+  const known = new Set(POOL.map(sk => sk.name));
+  const quick = NURSE_QUICK.filter(n => known.has(n) && !have.has(n.toLowerCase()));
+  $("skillQuick").innerHTML = quick.map(n => '<button type="button" class="qchip" data-add="' + esc(n) + '">+ ' + esc(n) + '</button>').join("");
+  $("skillQuickWrap").classList.toggle("hide", quick.length === 0);
+
+  $("skillpool").innerHTML = POOL
+    .filter(sk => !have.has(sk.name.toLowerCase()) && !NOT_FOR_NURSES.has(sk.name.toLowerCase()))
+    .map(sk => '<option value="' + esc(sk.name) + '"></option>').join("");
+}
+
+function renderMatches(){
+  const list = $("matchesList");
+  if(!MATCHES.length){
+    list.innerHTML = '<span class="empty">No scores yet. Roles are scored against you once a day, so your first results appear after the next refresh. Adding skills first will make them count.</span>';
+    $("matchesMeta").textContent = "";
+    $("matchesFoot").classList.add("hide");
     return;
+  }
+  const have = new Set([...MYSKILLS.values()].map(sk => sk.name.toLowerCase()));
+  const shown = MATCHES.slice(0, 5);
+  list.innerHTML = shown.map(m => {
+    const clears = m.score >= THRESH;
+    const where = m.job.remote ? "Remote" : (m.job.location || "");
+    const meta = [where, fmtPay(m.job)].filter(Boolean).join(" · ");
+    const bars = [["Skills", m.parts.skills], ["Level", m.parts.level], ["Pay", m.parts.pay], ["Place", m.parts.place]]
+      .map(b => '<div><div class="bar-l">' + b[0] + '</div><div class="bar"><i style="width:' + pct(b[1]) + '%"></i></div></div>')
+      .join("");
+    const missing = m.asks.filter(n => !have.has(String(n).toLowerCase())).slice(0, 4);
+    const asks = missing.length
+      ? '<div class="asks"><span class="asks-l">Asks for:</span>' +
+        missing.map(n => '<button type="button" class="qchip" data-add="' + esc(n) + '">+ ' + esc(n) + '</button>').join("") + '</div>'
+      : "";
+    return '<div class="match' + (clears ? ' clears' : '') + '">' +
+      '<div class="m-top"><div><div class="m-title">' + esc(m.job.title) + '</div>' +
+      '<div class="m-meta">' + esc(meta) + '</div>' +
+      (clears ? '<span class="m-flag">Clears your line</span>' : '') + '</div>' +
+      '<div class="m-score">' + Math.round(m.score) + '<small>%</small></div></div>' +
+      '<div class="bars">' + bars + '</div>' + asks + '</div>';
+  }).join("") + (MATCHES.length > shown.length
+      ? '<span class="empty" style="margin-top:10px">+ ' + (MATCHES.length - shown.length) + ' more roles scored</span>' : "");
+
+  const newest = MATCHES.reduce((a, m) => (!a || new Date(m.at) > new Date(a)) ? m.at : a, null);
+  $("matchesMeta").textContent = "Scored against what you told us. Last refreshed " +
+    new Date(newest).toLocaleDateString("en-US", { month:"short", day:"numeric" }) +
+    ". We email you when one reaches " + THRESH + "%.";
+  $("matchesFoot").classList.remove("hide");
+}
+
+async function refreshDashboard(notif){
+  const run = ++DASH_RUN;
+  const uid = SESSION && SESSION.user && SESSION.user.id;
+  if(!uid) return;
+  THRESH = notif && notif.threshold != null ? Number(notif.threshold) : 75;
+  try{
+    await loadPool();            if(run !== DASH_RUN) return;
+    await loadMySkills(uid);     if(run !== DASH_RUN) return;
+    renderSkills();
+  }catch(err){
+    if(run === DASH_RUN) skillMsg("Couldn't load your skills: " + err.message);
+  }
+  try{
+    await loadMatches(uid);      if(run !== DASH_RUN) return;
+    renderMatches();
+  }catch(err){
+    if(run === DASH_RUN) $("matchesList").innerHTML = '<span class="empty">Couldn\'t load your matches: ' + esc(err.message) + '</span>';
+  }
+}
+
+function resetDashboard(){
+  DASH_RUN++;
+  POOL = []; MYSKILLS = new Map(); MATCHES = []; PREV_HEADLINE = "";
+  $("skillChips").innerHTML = ""; $("skillQuick").innerHTML = ""; $("matchesList").innerHTML = "";
+  $("matchesMeta").textContent = ""; $("skillInput").value = ""; skillMsg("");
+  $("pRemote").checked = false; syncRemote();
+}
+
+/* ---- wiring (event delegation, so re-rendering never loses handlers) ---- */
+$("skillChips").onclick = (e) => {
+  const b = e.target.closest("button[data-act]");
+  if(!b) return;
+  const id = Number(b.getAttribute("data-id"));
+  if(b.getAttribute("data-act") === "rm") removeSkill(id); else toggleAge(id);
+};
+$("skillQuick").onclick = (e) => {
+  const b = e.target.closest("button[data-add]");
+  if(b) addSkill(b.getAttribute("data-add"));
+};
+$("matchesList").onclick = (e) => {
+  const b = e.target.closest("button[data-add]");
+  if(b) addSkill(b.getAttribute("data-add"));
+};
+$("skillAdd").onclick = async () => {
+  if(await addSkill($("skillInput").value)) $("skillInput").value = "";
+};
+$("skillInput").onkeydown = (e) => {
+  if(e.key === "Enter"){ e.preventDefault(); $("skillAdd").onclick(); }
+};
+
+/* ---- save the five questions ---- */
+$("pSave").onclick = async () => {
+  const name   = $("pName").value.trim();
+  const unit   = $("pUnit").value.trim();
+  const loc    = $("pLoc").value.trim();
+  const pay    = $("pPay").value.trim();
+  const remote = $("pRemote").checked;
+  const m = $("pMsg");
+  const fail = (t) => { m.textContent = t; m.className = "msg show bad"; };
+
+  if(!name || !unit || (!remote && !loc)){
+    return fail("Name, specialty and a location (or “Remote roles only”) are needed to score anything.");
+  }
+  let payNum = null;
+  if(pay !== ""){
+    payNum = Number(pay);
+    if(!isFinite(payNum) || payNum < 0) return fail("Pay should be a positive number.");
+    if(payNum > 12000) return fail("That looks like a yearly figure — this box is per week.");
   }
 
   $("pSave").disabled = true;
   $("pSave").textContent = "Saving…";
   m.className = "msg";
   try{
+    const uid = SESSION.user.id;
     const profile = await writeProfile(SESSION.access_token, {
-      user_id: SESSION.user.id,
+      user_id: uid,
       name,
       headline: unit,
       seniority: $("pExp").value,
-      location: loc,
+      location: remote ? null : loc,
+      remote_only: remote,
       pay_type: "weekly",
-      pay_min: pay === "" ? null : Number(pay),
+      pay_min: payNum,
       hours_per_week: 36,
     });
-    const token = SESSION.access_token, uid = SESSION.user.id;
-    const row   = await table("users", token, "select=id,email,kind&id=eq." + uid);
-    const notif = await table("notify_settings", token, "select=threshold&user_id=eq." + uid);
+    if(unit.toLowerCase() !== PREV_HEADLINE.toLowerCase()) await autoSkillFromUnit(unit, uid);
+    PREV_HEADLINE = unit;
+    const row   = await table("users", SESSION.access_token, "select=id,email,kind&id=eq." + uid);
+    const notif = await table("notify_settings", SESSION.access_token, "select=threshold&user_id=eq." + uid);
     showAllSet(profile, row, notif);
   }catch(err){
-    m.textContent = err.message;
-    m.className = "msg show bad";
+    fail(err.message);
   }finally{
     $("pSave").disabled = false;
     $("pSave").textContent = "Start matching me";
