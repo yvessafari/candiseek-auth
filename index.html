@@ -288,7 +288,7 @@
 
     <div>
       <h2>A score isn't a verdict.<br>It's a <em>direction</em>.</h2>
-      <p class="lede">Most hiring tools rank you once and forget you. We track where you stand, show you exactly what would move it, and tell you the moment a role comes within reach.</p>
+      <p class="lede">Most hiring tools rank you once and forget you. You'll always see where you stand and what would change it. And when a role clears your bar, we let you know.</p>
 
       <div class="viz">
         <svg class="gauge" viewBox="0 0 320 180" role="img" aria-label="A match score climbing to 100 percent, past a 75 percent threshold">
@@ -316,7 +316,7 @@
 
     <div class="card">
       <div class="tabs" role="tablist">
-        <button class="tab" id="tab-signup" role="tab" aria-selected="true">Create account</button>
+        <button class="tab" id="tab-signup" role="tab" aria-selected="true">Create free account</button>
         <button class="tab" id="tab-login" role="tab" aria-selected="false">Sign in</button>
       </div>
 
@@ -330,7 +330,7 @@
         <input id="password" type="password" autocomplete="new-password" placeholder="At least 6 characters" />
       </div>
 
-      <button class="go" id="go">Create account</button>
+      <button class="go" id="go">Create free account</button>
       <div class="msg" id="msg"></div>
     </div>
 
@@ -353,7 +353,7 @@
         <span class="step-n">2</span>
         <div>
           <h4>Every role gets scored against it</h4>
-          <p>Not against a job description you had to decode — against what you said you want. And the score moves as you add skills and as roles change.</p>
+          <p>Not against a job description you had to decode — against what you said you want. The score moves as you add skills, and every score is kept, so you can see how far you've come.</p>
         </div>
       </div>
 
@@ -373,28 +373,16 @@
 
     <div class="band">
       <div class="band-item">
+        <h4>Five questions to start.</h4>
+        <p>Answer five things and we start scoring. One profile, measured against every role — nothing else is required, now or later.</p>
+      </div>
+      <div class="band-item">
         <h4>The pay you see is the pay we scored.</h4>
-        <p>Every role carries a real weekly number, and that number goes straight into your match score. A posting that inflates pay scores wrong — so there's nowhere for a bait-and-switch to hide.</p>
+        <p>Pay goes straight into your match score, so an inflated posting scores wrong. Nowhere for a bait-and-switch to hide.</p>
       </div>
       <div class="band-item">
-        <h4>Your score is a history, not a snapshot.</h4>
-        <p>We keep every score you've ever had. Add a certification and watch the line move. Let a skill go stale and you'll see that too — before a recruiter does.</p>
-      </div>
-      <div class="band-item">
-        <h4>One profile. Scored against everything.</h4>
-        <p>Fill it in once. Every role that comes in gets measured against it automatically — no re-applying, no re-typing your licences for the ninth time.</p>
-      </div>
-      <div class="band-item">
-        <h4>Five questions to start. Nothing is required.</h4>
-        <p>No ten-section profile standing between you and your first match. Answer five things and we start scoring. Add references, documents and skills if and when you feel like it.</p>
-      </div>
-      <div class="band-item">
-        <h4>Pause with one switch.</h4>
-        <p>Not ready to hear from anyone? Flip it off. Your profile and scores stay exactly as they are. You shouldn't have to delete your account to get some quiet.</p>
-      </div>
-      <div class="band-item">
-        <h4>You're not advertising inventory.</h4>
-        <p>We don't sell your data, and we don't hand it to ad networks to retarget you. Employers see you only if you're visible, and only what you chose to share.</p>
+        <h4>You're in control.</h4>
+        <p>Pause with one switch — no deleting your account. We don't sell your data or hand it to ad networks.</p>
       </div>
     </div>
   </section>
@@ -473,11 +461,15 @@
       <div class="band">
         <div class="band-item">
           <h4>Post the real number.</h4>
-          <p>Pay feeds the score directly. An inflated rate scores your role against the wrong people and wastes everyone's first call — accurate postings reach better-fitting candidates.</p>
+          <p>Pay feeds the score directly. An inflated rate scores your role against the wrong people and wastes everyone's first call.</p>
         </div>
         <div class="band-item">
-          <h4>See how a candidate is trending.</h4>
-          <p>Scores are kept over time, so you can tell who's actively adding skills and who's standing still. Useful when you're hiring for what someone could become.</p>
+          <h4>Fewer, warmer applications.</h4>
+          <p>Candidates set their own bar, and only people above it hear about your role — so the ones who reply already want it.</p>
+        </div>
+        <div class="band-item">
+          <h4>See why, not just how much.</h4>
+          <p>Every score breaks down into skills, seniority, pay and location, so you can tell a gap you could train from a dealbreaker.</p>
         </div>
       </div>
     </section>
@@ -538,7 +530,20 @@
 
       <div class="field">
         <label for="pUnit">Specialty or unit</label>
-        <input id="pUnit" type="text" placeholder="ICU, Med-Surg, L&amp;D…" />
+        <input id="pUnit" type="text" list="units" placeholder="Start typing, or pick one" autocomplete="off" />
+        <datalist id="units">
+          <option>ICU</option><option>Med-Surg</option><option>Emergency / ED</option>
+          <option>Telemetry</option><option>Step-Down / PCU</option><option>Labor &amp; Delivery</option>
+          <option>Mother-Baby / Postpartum</option><option>NICU</option><option>PICU</option>
+          <option>Operating Room</option><option>PACU</option><option>Pre-Op</option>
+          <option>Cath Lab</option><option>Oncology</option><option>Dialysis</option>
+          <option>Psychiatric / Behavioral Health</option><option>Rehabilitation</option>
+          <option>Long-Term Care</option><option>Home Health</option><option>Hospice</option>
+          <option>Case Management</option><option>Float Pool</option>
+          <option>Interventional Radiology</option><option>Endoscopy</option>
+          <option>Wound Care</option><option>Infusion</option><option>Clinic / Ambulatory</option>
+          <option>CVICU</option><option>SICU</option><option>MICU</option><option>Trauma</option>
+        </datalist>
       </div>
 
       <div class="field">
@@ -554,7 +559,27 @@
 
       <div class="field">
         <label for="pLoc">Where you want to work</label>
-        <input id="pLoc" type="text" placeholder="Charlotte, NC — or Remote" />
+        <input id="pLoc" type="text" list="places" placeholder="Start typing, or pick one" autocomplete="off" />
+        <datalist id="places">
+          <option>Remote</option>
+          <option>Atlanta, GA</option><option>Austin, TX</option><option>Baltimore, MD</option>
+          <option>Birmingham, AL</option><option>Boston, MA</option><option>Charleston, SC</option>
+          <option>Charlotte, NC</option><option>Chicago, IL</option><option>Cincinnati, OH</option>
+          <option>Cleveland, OH</option><option>Columbus, OH</option><option>Dallas, TX</option>
+          <option>Denver, CO</option><option>Detroit, MI</option><option>Durham, NC</option>
+          <option>Greenville, SC</option><option>Houston, TX</option><option>Indianapolis, IN</option>
+          <option>Jacksonville, FL</option><option>Kansas City, MO</option><option>Knoxville, TN</option>
+          <option>Las Vegas, NV</option><option>Los Angeles, CA</option><option>Louisville, KY</option>
+          <option>Memphis, TN</option><option>Miami, FL</option><option>Milwaukee, WI</option>
+          <option>Minneapolis, MN</option><option>Nashville, TN</option><option>New Orleans, LA</option>
+          <option>New York, NY</option><option>Norfolk, VA</option><option>Oklahoma City, OK</option>
+          <option>Orlando, FL</option><option>Philadelphia, PA</option><option>Phoenix, AZ</option>
+          <option>Pittsburgh, PA</option><option>Portland, OR</option><option>Raleigh, NC</option>
+          <option>Richmond, VA</option><option>Sacramento, CA</option><option>Salt Lake City, UT</option>
+          <option>San Antonio, TX</option><option>San Diego, CA</option><option>San Francisco, CA</option>
+          <option>Savannah, GA</option><option>Seattle, WA</option><option>St. Louis, MO</option>
+          <option>Tampa, FL</option><option>Tucson, AZ</option><option>Washington, DC</option>
+        </datalist>
       </div>
 
       <div class="field">
@@ -645,14 +670,14 @@ function setMode(next){
   mode = next;
   $("tab-signup").setAttribute("aria-selected", next === "signup");
   $("tab-login").setAttribute("aria-selected", next === "login");
-  $("go").textContent = next === "signup" ? "Create account" : "Sign in";
+  $("go").textContent = next === "signup" ? "Create free account" : "Sign in";
   $("password").autocomplete = next === "signup" ? "new-password" : "current-password";
   clearMsg();
 }
 $("tab-signup").onclick = () => setMode("signup");
 $("tab-login").onclick  = () => setMode("login");
 
-function saveSession(s){ try{ localStorage.setItem("cs_session", JSON.stringify(s)); }catch(e){} }
+function saveSession(s){ try{ localStorage.setItem("cs_session", JSON.stringify(stamp(s))); }catch(e){} }
 function loadSession(){ try{ return JSON.parse(localStorage.getItem("cs_session")||"null"); }catch(e){ return null; } }
 function dropSession(){ try{ localStorage.removeItem("cs_session"); }catch(e){} }
 
@@ -667,6 +692,7 @@ async function auth(path, body){
 }
 
 async function table(name, token, query){
+  if(SESSION) token = await freshToken();
   const res = await fetch(SUPABASE_URL + "/rest/v1/" + name + "?" + query, {
     headers:{ apikey:ANON_KEY, Authorization:"Bearer " + token },
   });
@@ -715,7 +741,32 @@ $("signout").onclick = () => {
 
 let SESSION = null;
 
+/* Supabase access tokens last an hour. Swap an expiring one for a fresh
+   token using the refresh_token before any call that needs it. */
+function stamp(session){
+  if(session && !session.expires_at && session.expires_in){
+    session.expires_at = Math.floor(Date.now()/1000) + session.expires_in;
+  }
+  return session;
+}
+
+async function freshToken(){
+  if(!SESSION) throw new Error("Not signed in.");
+  const now = Math.floor(Date.now()/1000);
+  const exp = SESSION.expires_at || 0;
+  if(exp - now > 60) return SESSION.access_token;      // still good
+
+  if(!SESSION.refresh_token) throw new Error("Session expired — please sign in again.");
+  const next = stamp(await auth("token?grant_type=refresh_token",
+                                { refresh_token: SESSION.refresh_token }));
+  if(!next.access_token) throw new Error("Session expired — please sign in again.");
+  SESSION = next;
+  saveSession(next);
+  return next.access_token;
+}
+
 async function writeProfile(token, body){
+  token = await freshToken();
   const res = await fetch(SUPABASE_URL + "/rest/v1/candidate_profiles", {
     method:"POST",
     headers:{
@@ -914,7 +965,12 @@ $("eGo").onclick = async () => {
   setAudience(a);
 
   const s = loadSession();
-  if(s && s.access_token) showHome(s).catch(dropSession);
+  if(s && s.access_token){
+    SESSION = s;
+    freshToken()
+      .then(() => showHome(SESSION))
+      .catch(() => { dropSession(); SESSION = null; });
+  }
 })();
 </script>
 </body>
