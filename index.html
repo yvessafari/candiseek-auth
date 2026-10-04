@@ -764,7 +764,7 @@ const $ = (id) => document.getElementById(id);
 let mode = "signup";
 const kind = "candidate";  // employers are onboarded through sales, not self-serve
 
-function setMsg(t){ const m=$("msg"); m.textContent=t; m.className="msg show bad"; }
+function setMsg(t, kind){ const m=$("msg"); m.textContent=t; m.className="msg show " + (kind || "bad"); }
 function clearMsg(){ $("msg").className="msg"; }
 
 function setMode(next){
@@ -802,6 +802,8 @@ async function table(name, token, query){
   return rows.length ? rows[0] : null;
 }
 
+const HERE = (window.location && window.location.origin) ? window.location.origin + window.location.pathname : "";
+
 $("go").onclick = async () => {
   const email = $("email").value.trim();
   const password = $("password").value;
@@ -810,12 +812,29 @@ $("go").onclick = async () => {
   try{
     let session;
     if(mode === "signup"){
-      const out = await auth("signup", { email, password, data:{ kind } });
-      session = out.access_token ? out : await auth("token?grant_type=password", { email, password });
+      const out = await auth("signup" + (HERE ? "?redirect_to=" + encodeURIComponent(HERE) : ""), { email, password, data:{ kind } });
+      if(out.access_token) session = out;
+      else{
+        // Email confirmation is on: the account exists but can't sign in until the link is tapped.
+        try{ session = await auth("token?grant_type=password", { email, password }); }
+        catch(e){
+          if(/not confirmed/i.test(e.message)){
+            return setMsg("Check your email. We sent a link to " + email + ". Tap it to finish creating your account.", "ok");
+          }
+          if(/invalid login/i.test(e.message)){
+            return setMsg("That email may already have an account. Try Sign in, or check your inbox for a confirmation link.");
+          }
+          throw e;
+        }
+      }
     }else{
-      session = await auth("token?grant_type=password", { email, password });
+      try{ session = await auth("token?grant_type=password", { email, password }); }
+      catch(e){
+        if(/not confirmed/i.test(e.message)) throw new Error("Please confirm your email first. Tap the link we sent when you signed up.");
+        throw e;
+      }
     }
-    if(!session.access_token) throw new Error("No session returned. Email confirmation may still be switched on.");
+    if(!session.access_token) throw new Error("No session returned. Please try again.");
     saveSession(session);
     await showHome(session);
   }catch(err){ setMsg(err.message); }
@@ -1520,6 +1539,28 @@ $("eGo").onclick = async () => {
   let a = "candidate";
   try{ a = localStorage.getItem("cs_audience") || "candidate"; }catch(e){}
   setAudience(a);
+
+  // Returning from the confirmation email: Supabase puts the session (or an error) in the URL hash.
+  const hash = (window.location && window.location.hash) ? window.location.hash.replace(/^#/, "") : "";
+  const hp = new URLSearchParams(hash);
+  const clearHash = () => { try{ window.history.replaceState(null, "", HERE); }catch(e){} };
+  if(hp.get("error")){
+    clearHash();
+    setMode("login");
+    setMsg("That confirmation link has expired or was already used. Sign in, or create the account again for a fresh link.");
+  }else if(hp.get("access_token")){
+    const token = hp.get("access_token");
+    clearHash();
+    fetch(SUPABASE_URL + "/auth/v1/user", { headers:{ apikey:ANON_KEY, Authorization:"Bearer " + token } })
+      .then(r => r.ok ? r.json() : Promise.reject(new Error("link")))
+      .then(user => {
+        const session = stamp({ access_token:token, refresh_token:hp.get("refresh_token"), expires_in:Number(hp.get("expires_in")) || 3600, user });
+        saveSession(session);
+        return showHome(session);
+      })
+      .catch(() => { setMode("login"); setMsg("Your email is confirmed. Sign in to continue.", "ok"); });
+    return;
+  }
 
   const s = loadSession();
   if(s && s.access_token){
