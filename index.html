@@ -1573,9 +1573,20 @@ function loadScriptOnce(src){
     document.head.appendChild(el);
   });
 }
+// GitHub Pages addresses are case-sensitive, so accept either spelling of the folder.
+const VENDOR_DIRS = ["vendor/", "Vendor/"];
+let VENDOR_DIR = null;                       // whichever spelling worked, remembered for the next file
+async function fromVendor(attempt){
+  const dirs = VENDOR_DIR ? [VENDOR_DIR] : VENDOR_DIRS;
+  let last = null;
+  for(const d of dirs){
+    try{ const out = await attempt(d); VENDOR_DIR = d; return out; }catch(e){ last = e; }
+  }
+  throw last || new Error("load");
+}
 async function getJSZip(){
   if(window.JSZip) return window.JSZip;
-  try{ await loadScriptOnce("vendor/jszip.min.js"); }catch(e){ throw new Error("load"); }
+  try{ await fromVendor(d => loadScriptOnce(d + "jszip.min.js")); }catch(e){ throw new Error("load"); }
   if(!window.JSZip) throw new Error("load");
   return window.JSZip;
 }
@@ -1583,8 +1594,11 @@ async function getPdfjs(){
   if(window.pdfjsLib) return window.pdfjsLib;
   let lib;
   try{
-    lib = await import("./vendor/pdf.min.js");
-    lib.GlobalWorkerOptions.workerSrc = new URL("vendor/pdf.worker.min.js", window.location.href).href;
+    lib = await fromVendor(async (d) => {
+      const m = await import("./" + d + "pdf.min.js");
+      m.GlobalWorkerOptions.workerSrc = new URL(d + "pdf.worker.min.js", window.location.href).href;
+      return m;
+    });
   }catch(e){ throw new Error("load"); }
   window.pdfjsLib = lib;
   return lib;
